@@ -1,10 +1,9 @@
-import { useForm } from "react-hook-form";
-import signupimage from "../assets/register.png";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { signIn } from "../lib/auth";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import supabase from "../lib/supabaseClient";
+import { Link, useNavigate } from "react-router-dom";
+import signupimage from "../assets/register.png";
+import { signIn } from "../lib/auth";
 
 const LoginPage = () => {
   const {
@@ -29,9 +28,9 @@ const onSubmit = async (data) => {
     toast.success("Signed in successfully!");
 
     if (response.role === "student") {
-      navigate("/student-dashboard");
+      navigate("/dashboard/student");
     } else if (response.role === "teacher") {
-      navigate("/teacher-dashboard");
+      navigate("/dashboard/teacher");
     } else {
       navigate("/");
     }
