@@ -60,10 +60,77 @@ export const signIn = async (email, password) => {
 };
 
 
+export async function getUserProfile(userId) {
+  // Get current session
+  const { data: sessionData } = await supabase.auth.getSession();
+
+  // Try to fetch existing profile
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  // If ther is no profile create a new profile
+  if (error && error.code === "PGRST116") {
+    console.log("No profile found, creating one for:", userId);
+
+    // Get user data
+    const { data: userData } = await supabase.auth.getUser();
+
+    const fullname =
+      userData?.user?.user_metadata?.fullname ||
+      userData?.user?.email?.split("@")[0] ||
+      "New User";
+
+    const { data: newProfile, error: profileError } = await supabase
+      .from("users")
+      .insert({
+        id: userId,
+        role: "student",
+        fullname,
+      })
+      .select()
+      .single();
+
+    if (profileError) {
+      console.error("Error creating profile:", profileError);
+      throw profileError;
+    } else {
+      console.log("Profile created successfully:", newProfile);
+      return newProfile;
+    }
+  }
+
+  // General error
+  if (error) {
+    console.error("Error fetching profile:", error);
+    throw error;
+  }
+
+  console.log("Existing profile found:", data);
+  return data;
+}
+
+
+
+
+export function onAuthChange(callback){
+
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+            callback(session?.user || null, event)
+    })
+
+    return () => data.subscription.unsubscribe();
+}
+
 
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
-  if (error) return { error: error.message };
-  return {error};
+  if (error) {
+    console.error("Error signing out:", error.message);
+    return { error: error.message };
+  }
+  return { success: true };
 };
