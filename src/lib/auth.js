@@ -108,10 +108,21 @@ export async function getUserProfile(userId) {
     throw error;
   }
 
-  console.log("Existing profile found:", data);
+  // console.log("Existing profile found:", data);
   return data;
 }
 
+// Update profile
+export const updateUserProfile = async (profileId, updates) => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .update(updates)
+    .eq("id", profileId)
+    .select();
+
+  if (error) throw error;
+  return data[0];
+};
 
 
 

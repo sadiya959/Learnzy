@@ -84,7 +84,7 @@ const Header = () => {
                     <Link
                       onClick={() => setDropdownOpen(false)}
                       className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-                      to="profile"
+                      to={`${dashboardPath}/profile`}
                     >
                       Profile
                     </Link>
