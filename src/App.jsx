@@ -1,11 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import CoursesPage from "./pages/CoursesPage";
-import ProfilePage from "./pages/ProfilePage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
@@ -18,13 +17,27 @@ import UnAuthenticatedRoute from "./components/UnAuthenticatedRouter";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
+import DashboardLayout from "./components/DashboardLayout";
+import ProfilePage from "./pages/ProfilePage";
+import EnrolledCourses from "./pages/EnrolledCourses"
+import { CoursesProvider } from "./context/coursesContext";
+import TeacherCoursesPage from "./pages/TeacherCoursesPage";
+
 
 function App() {
+
+
+  const location = useLocation();
+
+  // hide header/footer in dashboard
+  const isDashboard = location.pathname.startsWith("/dashboard");
+
   return (
     <AuthProvider>
+      <CoursesProvider>
       <div>
         {/* header */}
-        <Header />
+         <Header />
         <main>
           {/* routes */}
           <Routes>
@@ -55,49 +68,50 @@ function App() {
             />
 
             {/* protected route */}
+           
+               {/* Student Dashboard Routes */}
             <Route
               path="/dashboard/student"
               element={
                 <ProtectedRoute allowedRoles={["student"]}>
-                  <StudentDashboard />
+                  <DashboardLayout />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route index element={<StudentDashboard />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="my-courses" element={<EnrolledCourses />} />
+            </Route>
 
+
+
+             {/* 👨‍🏫 Teacher Dashboard Routes */}
             <Route
               path="/dashboard/teacher"
               element={
                 <ProtectedRoute allowedRoles={["teacher"]}>
-                  <TeacherDashboard />
+                  <DashboardLayout />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route index element={<TeacherDashboard />} />
+              <Route path="create" element={<ManageCoursesPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="my-courses" element={<TeacherCoursesPage />} />
+              
+            </Route>
 
-            <Route
-              path="/dashboard/teacher/create"
-              element={
-                <ProtectedRoute allowedRoles={["teacher"]}>
-                  <ManageCoursesPage />
-                </ProtectedRoute>
-              }
-            />
 
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute allowedRoles={["student", "teacher"]}>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
+  
           </Routes>
         </main>
         {/* footer */}
-        <Footer />
+        {!isDashboard && <Footer />}
       </div>
 
       {/* <Toaster /> */}
       <Toaster position="top-right" reverseOrder={false} />
+       </CoursesProvider>
     </AuthProvider>
   );
 }
