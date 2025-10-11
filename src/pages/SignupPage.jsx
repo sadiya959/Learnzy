@@ -5,7 +5,7 @@ import { useState } from "react";
 import { signUp } from "../lib/auth";
 import toast from "react-hot-toast";
 
-const SignupPage = () => {
+const SignUpPage = () => {
   const {
     register,
     handleSubmit,
@@ -134,4 +134,4 @@ const onSubmit = async (data) => {
   );
 };
 
-export default SignupPage;
+export default SignUpPage;
