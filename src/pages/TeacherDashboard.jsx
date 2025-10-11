@@ -4,7 +4,7 @@ import { RiEdit2Line } from "react-icons/ri";
 import dashboardheader from "../assets/dashboardheader.png";
 import DashboardCards from "../components/DashoardCards";
 import { useAuth } from "../context/AuthContext";
-import { useCourses } from "../context/CoursesContext";
+import { useCourses } from "../context/coursesContext";
 import { Link, useNavigate } from "react-router-dom";
 
 const TeacherDashboard = () => {
