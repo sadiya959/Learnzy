@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCourses } from "../context/CoursesContext";
+import { useCourses } from "../context/coursesContext";
 import { useEffect } from 'react'
 import { PiChalkboardTeacherThin, PiCertificateThin } from "react-icons/pi";
 import { IoSchoolOutline } from "react-icons/io5";
