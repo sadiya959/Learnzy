@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import SignUpPage from './pages/SignUpPage'
+// import SignUpPage from './pages/SignUpPage'
 import HomePage from "./pages/HomePage";
 import CoursesPage from "./pages/CoursesPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
@@ -53,14 +53,14 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
   path="/signup"
   element={
     <UnAuthenticatedRoute>
       <SignUpPage />
     </UnAuthenticatedRoute>
   }
-/>
+/> */}
 
             {/* protected route */}
            
