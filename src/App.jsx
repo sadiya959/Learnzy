@@ -54,13 +54,13 @@ function App() {
             />
 
             <Route
-              path="/signup"
-              element={
-                <UnAuthenticatedRoute>
-                  <SignUpPage />
-                </UnAuthenticatedRoute>
-              }
-            />
+  path="/signup"
+  element={
+    <UnAuthenticatedRoute>
+      <SignUpPage />
+    </UnAuthenticatedRoute>
+  }
+/>
 
             {/* protected route */}
            
