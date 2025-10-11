@@ -6,6 +6,7 @@ import { IoSchoolOutline } from "react-icons/io5";
 
 
 
+
 const HomePage = () => {
   const { courses, isLoading, fetchCourses } = useCourses();
 
