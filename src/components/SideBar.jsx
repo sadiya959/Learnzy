@@ -30,19 +30,8 @@ export default function Sidebar() {
 
           <span>Dashboard</span>
         </NavLink>
-        {role === "teacher" ? (
+        {role === "teacher" && (
           <>
-            <NavLink
-              to="/dashboard/teacher/my-courses"
-              className={({ isActive }) =>
-                isActive
-                  ? `block flex items-center bg-gray-100  gap-2 hover:bg-gray-100 p-2 rounded`
-                  : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
-              }
-            >
-              <BsBook />
-              <span> My Courses</span>
-            </NavLink>
             <NavLink
               to="/dashboard/teacher/create"
               className={({ isActive }) =>
@@ -56,30 +45,7 @@ export default function Sidebar() {
               <span>Create Course</span>
             </NavLink>
           </>
-        ) : (
-          <>
-            <NavLink
-              to={`/dashboard/student/my-courses`}
-              className={({ isActive }) =>
-                isActive
-                  ? `block flex items-center bg-gray-100  gap-2 hover:bg-gray-100 p-2 rounded`
-                  : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
-              }
-            >
-              My Courses
-            </NavLink>
-            <NavLink
-              to="/dashboard/student/progress"
-              className={({ isActive }) =>
-                isActive
-                  ? `block flex items-center bg-gray-100  gap-2 hover:bg-gray-100 p-2 rounded`
-                  : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
-              }
-            >
-              <BsBookFill />
-              My Progress
-            </NavLink>
-          </>
+        
         )}
 
         <>
