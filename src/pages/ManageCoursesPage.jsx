@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineDelete } from "react-icons/ai";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
-import { useCourses } from "../context/CoursesContext";
+import { useCourses } from "../context/coursesContext";
 
 const ManageCoursesPage = () => {
   const { courseId } = useParams(); // For edit mode
