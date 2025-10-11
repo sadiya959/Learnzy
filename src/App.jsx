@@ -1,7 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-
+import SignupPage from "./pages/SignupPage"; // ✅ fixed import (lowercase “u”)
 import HomePage from "./pages/HomePage";
 import CoursesPage from "./pages/CoursesPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
@@ -18,10 +17,7 @@ import DashboardLayout from "./components/DashboardLayout";
 import ProfilePage from "./pages/ProfilePage";
 import { CoursesProvider } from "./context/coursesContext";
 
-
 function App() {
-
-
   const location = useLocation();
 
   const isDashboard = location.pathname.startsWith("/dashboard");
@@ -31,82 +27,73 @@ function App() {
   return (
     <AuthProvider>
       <CoursesProvider>
-      <div>
-        {/* header */}
-         
+        <div>
+          {/* Header (hidden on login/signup pages) */}
+          {!isSignup && !isLogin && <Header />}
 
-         {!isSignup && !isLogin && <Header />}
-        <main>
-          {/* routes */}
-          <Routes>
-            {/* public routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/courses/:id" element={<CourseDetailsPage />} />
+          <main>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/courses" element={<CoursesPage />} />
+              <Route path="/courses/:id" element={<CourseDetailsPage />} />
 
-            {/* unauthenticated routes (redirect to home if logged in) */}
-            <Route
-              path="/login"
-              element={
-                <UnAuthenticatedRoute>
-                  <LoginPage />
-                </UnAuthenticatedRoute>
-              }
-            />
+              {/* Unauthenticated Routes */}
+              <Route
+                path="/login"
+                element={
+                  <UnAuthenticatedRoute>
+                    <LoginPage />
+                  </UnAuthenticatedRoute>
+                }
+              />
 
-            <Route
-              path="/signup"
-              element={
-                <UnAuthenticatedRoute>
-                  <SignUpPage />
-                </UnAuthenticatedRoute>
-              }
-            />
+              <Route
+                path="/signup"
+                element={
+                  <UnAuthenticatedRoute>
+                    <SignupPage />
+                  </UnAuthenticatedRoute>
+                }
+              />
 
-            {/* protected route */}
-           
-               {/* Student Dashboard Routes */}
-            <Route
-              path="/dashboard/student"
-              element={
-                <ProtectedRoute allowedRoles={["student"]}>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<StudentDashboard />} />
-              <Route path="profile" element={<ProfilePage />} />
-            </Route>
+              {/* Student Dashboard Routes */}
+              <Route
+                path="/dashboard/student"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<StudentDashboard />} />
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
 
+              {/* Teacher Dashboard Routes */}
+              <Route
+                path="/dashboard/teacher"
+                element={
+                  <ProtectedRoute allowedRoles={["teacher"]}>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<TeacherDashboard />} />
+                <Route path="create" element={<ManageCoursesPage />} />
+                <Route path="create/:id" element={<ManageCoursesPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
+            </Routes>
+          </main>
 
+          {/* Footer (hidden on dashboard/login/signup) */}
+          {!isDashboard && !isSignup && !isLogin && <Footer />}
+        </div>
 
-             {/* 👨‍🏫 Teacher Dashboard Routes */}
-            <Route
-              path="/dashboard/teacher"
-              element={
-                <ProtectedRoute allowedRoles={["teacher"]}>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<TeacherDashboard />} />
-              <Route path="create" element={<ManageCoursesPage />} />
-              <Route path="create/:id" element={<ManageCoursesPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-            </Route>
-
-              
-
-  
-          </Routes>
-        </main>
-        {/* footer */}
-        {!isDashboard && !isSignup && !isLogin && <Footer />}
-      </div>
-
-      {/* <Toaster /> */}
-      <Toaster position="top-right" reverseOrder={false} />
-       </CoursesProvider>
+        {/* Toast Notifications */}
+        <Toaster position="top-right" reverseOrder={false} />
+      </CoursesProvider>
     </AuthProvider>
   );
 }
