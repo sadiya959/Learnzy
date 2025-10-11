@@ -1,91 +1,102 @@
 import { useEffect } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
-import { RiEdit2Line } from "react-icons/ri";
 import dashboardheader from "../assets/dashboardheader.png";
-import DashboardCards from "../components/DashoardCards";
 import { useAuth } from "../context/AuthContext";
 import { useCourses } from "../context/coursesContext";
+import { Link } from "react-router-dom";
+import DashboardCards from "../components/DashoardCards";
 
 const StudentDashboard = () => {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
+  const { courses, fetchStudentCourses, isLoading } = useCourses(); 
 
-  const { courses, fetchTeacherCourses, isLoading } = useCourses();
-  const { user } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      fetchTeacherCourses();
-    }
-  }, [user, fetchTeacherCourses]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
-      </div>
-    );
-  }
+    if (user) fetchStudentCourses(user.id);
+  }, [user, fetchStudentCourses]);
 
   return (
-    <div>
-      {/* dashboard header  */}
-      <div className="bg-[linear-gradient(167deg,rgba(21,_4,_90,_1)_0%,rgba(123,_197,_255,_1)_100%)] p-8 h-auto relative  text-white rounded-xl flex  ">
+    <div className="space-y-10 p-6">
+      {/* Dashboard Header */}
+      <div className="bg-gradient-to-r from-[#15045A] to-[#7BC5FF] p-8 rounded-2xl text-white relative overflow-hidden">
         <div className="flex">
           <div>
-            <h1 className="text-4xl">Welcome Back, Sara</h1>
+            <h1 className="text-4xl font-semibold">
+              Welcome Back, {profile?.fullname || "Student"}
+            </h1>
 
             <p className="text-gray-300 max-w-xl my-3">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt,
-              necessitatibus. Lorem, ipsum.{" "}
+              Continue your learning journey — you’re doing great!
             </p>
 
-            <button className="bg-gray-200 text-gray-800 cursor-pointer rounded-lg mt-4 px-3 py-1">
+            <button className="bg-gray-200 text-gray-800 rounded-lg mt-4 px-3 py-1">
               Get Started
             </button>
           </div>
-          <div className="absolute -bottom-10 right-30">
-            <img className="w-90" src={dashboardheader} alt="" />
+
+          <div className="absolute -bottom-10 right-10 hidden lg:block">
+            <img className="w-80" src={dashboardheader} alt="" />
           </div>
         </div>
       </div>
+
       <DashboardCards />
 
-      {/* courses */}
+      {/* Enrolled Courses */}
       <div className="my-12 space-y-5">
-        {courses.map((course) => (
-          <div
-            className=" border rounded-md border-blue-100 p-3"
-            key={course.title}
-          >
-            <div className="flex justify-between w-full items-center">
-              <div className="flex gap-5">
-                <img
-                  className="w-30 overflow-hidden rounded-lg"
-                  src={course.image_url}
-                  alt=""
-                />
-                <div>
-                  <h2 className="text-lg font-medium">{course.title}</h2>
-                  <p className="text-sm">{course.description}</p>
+        {isLoading ? (
+          <div className="min-h-[50vh] flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        ) : courses.length === 0 ? (
+          <p className="text-gray-500 text-center mt-10">
+            You haven’t enrolled in any courses yet. 🎓
+          </p>
+        ) : (
+          courses.map((course) => (
+            <div
+              className="border rounded-md border-blue-100 p-3 shadow-sm"
+              key={course.id}
+            >
+              <div className="flex justify-between w-full items-center flex-wrap gap-5">
+                <div className="flex gap-5 items-start">
+                  <img
+                    className="w-32 h-24 object-cover rounded-lg"
+                    src={
+                      course.image_url ||
+                      "https://via.placeholder.com/150x100?text=No+Image"
+                    }
+                    alt={course.title}
+                  />
+                  <div>
+                    <h2 className="text-lg font-medium">{course.title}</h2>
+                    <p className="text-sm text-gray-600 max-w-md">
+                      {course.description || "No description provided."}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-end">
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={course.progress || 0}
+                    className="w-60 accent-blue-600"
+                    readOnly
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Progress: {course.progress || 0}%
+                  </p>
+                  <Link to={`/courses/${course.id}`}>
+                    <button className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-3 hover:bg-blue-700 transition">
+                      Continue
+                    </button>
+                  </Link>
                 </div>
               </div>
-              <div className="flex gap-5 items-center">
-                <RiEdit2Line
-                  className="text-primary-light cursor-pointer"
-                  size={20}
-                />
-                <AiOutlineDelete
-                  className="text-red-400 cursor-pointer"
-                  size={20}
-                />
-
-                <button className="bg-primary text-white py-2 px-4 rounded-lg cursor-pointer">
-                  View
-                </button>
-              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

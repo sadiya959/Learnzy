@@ -9,8 +9,8 @@ import logo from "../assets/logo.png";
 const navLinks = [
   { to: "/", name: "Home" },
   { to: "/courses", name: "Courses" },
-  { to: "/about", name: "About" },
-  { to: "/contact", name: "Contact" },
+  { to: "#", name: "About" },
+  { to: "#", name: "Contact" },
 ];
 
 const Header = () => {
