@@ -1,16 +1,65 @@
-# React + Vite
+# 🎓 Learnzy – Online Learning Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Learnzy is a modern **Learning Management System (LMS)** built with **React**, **Tailwind CSS**, and **Supabase**.  
+It allows teachers to create and manage courses, and students to enroll, watch lessons, and track progress — all in a clean, responsive interface.
 
-Currently, two official plugins are available:
+🌐 **Live Demo:** [learnzy-six.vercel.app](https://learnzy-six.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+### 👩‍🏫 For Teachers
+- Create, edit, and manage courses
+- Upload lessons with video support
+- Manage enrolled students
 
-## Expanding the ESLint configuration
+### 👨‍🎓 For Students
+- Browse and search available courses
+- Enroll in courses
+- Watch video lessons (expand/collapse section)
+- View teacher profiles
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔐 Authentication
+- Secure signup and login using **Supabase Auth**
+- Role-based access control (Teacher / Student)
+
+### 🧩 Tech Stack
+
+| Category | Technology |
+|-----------|-------------|
+| Frontend | React + Vite |
+| Styling | Tailwind CSS |
+| State & Context | React Context API |
+| Backend | Supabase (Database + Auth + Storage) |
+| Deployment | Vercel |
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/sadiya959/Learnzy.git
+cd Learnzy
+
+
+npm install
+
+
+# Add Environment Variables
+
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+
+npm run dev
+
+```
+
+
+
+
+
+

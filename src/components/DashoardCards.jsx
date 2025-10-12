@@ -1,19 +1,18 @@
+import { useState } from "react";
 import { BsBook, BsPerson } from "react-icons/bs";
 import { useAuth } from "../context/AuthContext";
 import { useCourses } from "../context/coursesContext";
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
 
 const DashboardCard = () => {
   const { profile } = useAuth();
-  const { courses, fetchCourses, fetchStudentCourses } = useCourses();
-  const [studentCount, setStudentCount] = useState(0);
+  const { courses } = useCourses();
+  const [studentCount] = useState(0);
   const role = profile?.role;
 
   
 
   return (
-    <div className="flex gap-5">
+    <div className="flex md:flex-row flex-col  gap-5 ">
       {role === "teacher" ? (
         <>
           <div className="bg-blue-100 flex shadow-lg hover:shadow-xl gap-4 flex-col items-center rounded-2xl p-4 mt-20 flex-1 text-center">

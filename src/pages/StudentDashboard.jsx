@@ -44,7 +44,7 @@ const StudentDashboard = () => {
       {/* Enrolled Courses */}
       <div className="my-12 space-y-5">
         {isLoading ? (
-          <div className="min-h-[50vh] flex items-center justify-center">
+          <div className="min-h-[50vh] flex flex-col md:flex-row items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
           </div>
         ) : courses.length === 0 ? (
@@ -75,7 +75,7 @@ const StudentDashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col md:items-end items-start">
                   <input
                     type="range"
                     min={0}
@@ -88,7 +88,7 @@ const StudentDashboard = () => {
                     Progress: {course.progress || 0}%
                   </p>
                   <Link to={`/courses/${course.id}`}>
-                    <button className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-3 hover:bg-blue-700 transition">
+                    <button className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-3 hover:bg-blue-700 transition  ">
                       Continue
                     </button>
                   </Link>

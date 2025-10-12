@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useCourses } from "../context/coursesContext";
-import { useEffect } from 'react'
 import { PiChalkboardTeacherThin, PiCertificateThin } from "react-icons/pi";
 import { IoSchoolOutline } from "react-icons/io5";
 
@@ -8,7 +7,7 @@ import { IoSchoolOutline } from "react-icons/io5";
 
 
 const HomePage = () => {
-  const { courses, isLoading, fetchCourses } = useCourses();
+  const { courses, isLoading } = useCourses();
 
 
 

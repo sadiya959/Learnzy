@@ -14,7 +14,7 @@ export default function Sidebar() {
   const role = profile?.role;
 
   return (
-    <div className="w-64 border-r border-gray-300 text-text-color h-full p-4 flex flex-col">
+    <div className="md:w-64 border-r border-gray-300 text-text-color h-full p-4 flex flex-col">
       {/* logo */}
       <h1 className="text-xl font-bold mb-8">Dashboard</h1>
       <nav className="space-y-2">
@@ -26,7 +26,7 @@ export default function Sidebar() {
               : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
           }
         >
-          <BsCollection />
+          <BsCollection  />
 
           <span>Dashboard</span>
         </NavLink>
@@ -40,7 +40,7 @@ export default function Sidebar() {
                   : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
               }
             >
-              <BsPlusSquare />
+              <BsPlusSquare  />
 
               <span>Create Course</span>
             </NavLink>
@@ -68,14 +68,14 @@ export default function Sidebar() {
                 : `block flex items-center  gap-2 hover:bg-gray-100 p-2 rounded`
             }
           >
-            <BsCardText />
+            <BsCardText  />
             Courses
           </NavLink>
           <NavLink
             to="#"
             className="block flex items-center gap-2 hover:bg-gray-100 p-2 rounded"
           >
-            <CiSettings />
+            <CiSettings  />
             <span>Setting</span>
           </NavLink>
         </>

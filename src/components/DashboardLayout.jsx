@@ -3,9 +3,9 @@ import Sidebar from "./SideBar";
 
 const DashboardLayout = () => {
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-800">
+    <div className="flex md:flex-row flex-col min-h-screen bg-gray-50 text-gray-800">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md hidden md:block">
+      <aside>
         <Sidebar />
       </aside>
 

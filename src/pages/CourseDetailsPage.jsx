@@ -4,6 +4,8 @@ import { useCourses } from "../context/coursesContext";
 import { useAuth } from "../context/AuthContext";
 import { enrollInCourse, getEnrolledCourses } from "../lib/courses";
 import Lessons from "../components/Lessons";
+import toast from "react-hot-toast";
+
 
 
 const CourseDetailsPage = () => {
@@ -14,12 +16,11 @@ const CourseDetailsPage = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
 
-  // Fetch course details
+  // Fetch course detail
   useEffect(() => {
     if (id) fetchCourseDetails(id);
   }, [id, fetchCourseDetails]);
 
-  // Check if user is already enrolled
   useEffect(() => {
     const checkEnrollment = async () => {
       if (!user || !selectedCourse) return;
@@ -36,14 +37,14 @@ const CourseDetailsPage = () => {
 
   // Handle enrollment
   const handleEnroll = async () => {
-    if (!user) return alert("You must be logged in to enroll!");
+    if (!user) return toast.error("You must be logged in to enroll!");
     try {
       setIsEnrolling(true);
       await enrollInCourse(user.id, selectedCourse.id);
       setIsEnrolled(true);
     } catch (error) {
       if (error.message.includes("duplicate key")) {
-        alert("You’re already enrolled in this course!");
+        toast.error("You’re already enrolled in this course!");
         setIsEnrolled(true);
       } else {
         console.error("Enrollment failed:", error.message);
@@ -64,7 +65,7 @@ const CourseDetailsPage = () => {
   return (
     <div className="p-8 min-h-screen">
       <div className="max-w-6xl mx-auto bg-white p-8">
-        {/* Top Section: Course Image + Info */}
+        {/* Image + Info */}
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
             <h1 className="text-3xl font-semibold text-gray-800">
