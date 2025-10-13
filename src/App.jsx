@@ -90,7 +90,7 @@ function App() {
             >
               <Route index element={<TeacherDashboard />} />
               <Route path="create" element={<ManageCoursesPage />} />
-              <Route path="create/:id" element={<ManageCoursesPage />} />
+              <Route path="edit/:id" element={<ManageCoursesPage />} />
               <Route path="profile" element={<ProfilePage />} />
             </Route>
 

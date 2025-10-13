@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RiEdit2Line } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
 import dashboardheader from "../assets/dashboardheader.png";
 import DashboardCards from "../components/DashoardCards";
 import { useAuth } from "../context/AuthContext";
 import { useCourses } from "../context/coursesContext";
-import { Link, useNavigate } from "react-router-dom";
 
 const TeacherDashboard = () => {
-  const { user, profile } = useAuth();
+  const {  profile } = useAuth();
   const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
   
-  const { courses, isLoading, fetchCourses, deleteCourse } = useCourses();
+  const { courses, isLoading, deleteCourse } = useCourses();
+
+
 
   const handleDelete = async (courseId) => {
     setDeletingId(courseId);
@@ -86,7 +88,7 @@ const TeacherDashboard = () => {
 
               <div className="flex gap-5 items-center">
                 <RiEdit2Line
-                  onClick={() => navigate(`/create/${course.id}`)}
+                  onClick={() => navigate(`/dashboard/teacher/edit/${course.id}`)}
                   className="text-primary-light cursor-pointer"
                   size={20}
                 />

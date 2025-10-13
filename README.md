@@ -56,10 +56,47 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 npm run dev
 
+
 ```
 
 
+---
 
+## 📸 Screenshots
 
+| Home Page | Courses Page | Student Dashboard | Course Details |
+|-----------|--------------|-----------------|----------------|
+| ![Home Page](https://via.placeholder.com/400x250?text=Home+Page) | ![Courses Page](https://via.placeholder.com/400x250?text=Courses+Page) | ![Student Dashboard](https://via.placeholder.com/400x250?text=Student+Dashboard) | ![Course Details](https://via.placeholder.com/400x250?text=Course+Details) |
+
+---
+
+## 🧠 Future Improvements
+
+- Course progress tracking  
+- Quizzes and assignments  
+- Payment integration  
+- Teacher analytics dashboard  
+- Student feedback system  
+
+---
+
+## 🧑‍💻 Author
+
+**Sadia Mahmoud**  
+💼 GitHub: [https://github.com/sadiya959](https://github.com/sadiya959)  
+📧 Email: sacdamamoud@gmail.com  
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 🏗️ Deployment
+
+Deployed with **Vercel**  
+🔗 [Learnzy Live Site](https://learnzy-six.vercel.app)
 
 

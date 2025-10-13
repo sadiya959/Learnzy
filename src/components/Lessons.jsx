@@ -11,6 +11,9 @@ const Lessons = ({ lessons }) => {
     return <p className="text-gray-500">No lessons added yet.</p>;
   }
 
+
+  console.log(lessons)
+
   return (
     <ul className="space-y-3">
       {lessons.map((lesson) => (
@@ -33,14 +36,18 @@ const Lessons = ({ lessons }) => {
           {openLessonId === lesson.id && (
             <div className="mt-4">
               {lesson.video_url ? (
-                <video
-                  controls
-                  className="w-full rounded-md"
-                  src={lesson.video_url}
-                />
-              ) : (
-                <p className="text-gray-600 text-sm">{lesson.content}</p>
-              )}
+  <video
+    key={lesson.video_url}
+    controls
+    className="w-full rounded-md h-full"
+  >
+    <source src={lesson.video_url} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+) : (
+  <p className="text-gray-600 text-sm">{lesson.content}</p>
+)}
+
             </div>
           )}
         </li>

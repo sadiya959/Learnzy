@@ -32,7 +32,7 @@ export const getAllCourses = async ({ teacherId } = {}) => {
   return data;
 };
 
-// Fetch single course (with teacher info)
+// Fetch single course 
 export async function getCourseById(courseId) {
   const { data, error } = await supabase
     .from("courses")
@@ -52,16 +52,16 @@ export async function getCourseById(courseId) {
 }
 
 //  Update a course
-export const updateCourseById = async (courseId, updatedData) => {
+export async function updateCourseById(courseId, updatedData) {
   const { data, error } = await supabase
     .from("courses")
     .update(updatedData)
     .eq("id", courseId)
-    .select();
+    .select(); // important! select() ensures it returns the updated row
 
   if (error) throw error;
-  return data[0];
-};
+  return data;
+}
 
 
 

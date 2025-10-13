@@ -7,7 +7,7 @@ import {
   getLessonsByCourse,
   getEnrolledCourses,
   updateCourseById,
-  deleteCourseById, 
+  deleteCourseById,
 } from "../lib/courses";
 import { useAuth } from "./AuthContext";
 
@@ -53,15 +53,14 @@ export function CoursesProvider({ children }) {
   const { user, profile } = useAuth();
   const [state, dispatch] = useReducer(coursesReducer, initialState);
 
-  // Fetch courses
+  // Fetch courses 
   const fetchCourses = useCallback(async () => {
-    if (!user) return;
     dispatch({ type: "SET_LOADING" });
     try {
       const data =
-        profile?.role === "teacher"
+        profile?.role === "teacher" && user
           ? await getAllCourses({ teacherId: user.id })
-          : await getAllCourses();
+          : await getAllCourses(); 
       dispatch({ type: "SET_COURSES", payload: data || [] });
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -69,20 +68,21 @@ export function CoursesProvider({ children }) {
     }
   }, [user, profile]);
 
-  // Fetch course details
-  const fetchCourseDetails = useCallback(async (courseId) => {
-    dispatch({ type: "SET_LOADING" });
-    try {
-      const course = await getCourseById(courseId);
-      const lessonsData = await getLessonsByCourse(courseId);
-      dispatch({ type: "SET_SELECTED_COURSE", payload: course });
-      dispatch({ type: "SET_LESSONS", payload: lessonsData });
-    } catch (error) {
-      console.error("Error fetching course details:", error);
-    }
-  }, []);
+const fetchCourseDetails = useCallback(async (courseId) => {
+  dispatch({ type: "SET_LOADING" });
+  try {
+    const course = await getCourseById(courseId);
+    const lessonsData = await getLessonsByCourse(courseId);
+    dispatch({ type: "SET_SELECTED_COURSE", payload: course });
+    dispatch({ type: "SET_LESSONS", payload: lessonsData });
+    return { ...course, lessons: lessonsData }; // <-- RETURN course here
+  } catch (error) {
+    console.error("Error fetching course details:", error);
+    return null;
+  }
+}, []);
 
-  // Fetch student courses
+
   const fetchStudentCourses = useCallback(async (studentId) => {
     if (!studentId) return;
     dispatch({ type: "SET_LOADING" });
@@ -94,7 +94,6 @@ export function CoursesProvider({ children }) {
     }
   }, []);
 
-  // Add course
   const addCourse = async (courseData) => {
     if (!user) return alert("You must be logged in as a teacher!");
     dispatch({ type: "SET_LOADING" });
@@ -108,32 +107,34 @@ export function CoursesProvider({ children }) {
     }
   };
 
-  // Update course
-  const updateCourse = async (courseId, updatedData) => {
-    dispatch({ type: "SET_LOADING" });
-    try {
-      const updated = await updateCourseById(courseId, updatedData);
-      dispatch({ type: "UPDATE_COURSE", payload: updated });
-      return updated;
-    } catch (error) {
-      console.error("Error updating course:", error);
-      throw error;
-    }
-  };
+  
 
-  // Delete course
-  const deleteCourse = async (courseId) => {
+  const updateCourse = async (courseId, updatedData) => {
   dispatch({ type: "SET_LOADING" });
   try {
-    await deleteCourseById(courseId); // delete from Supabase
-    dispatch({ type: "DELETE_COURSE", payload: courseId }); // remove from state
+    const updatedArray = await updateCourseById(courseId, updatedData); // Supabase returns array
+    const updated = updatedArray[0]; // get the actual object
+    dispatch({ type: "UPDATE_COURSE", payload: updated });
+    return updated;
   } catch (error) {
-    console.error("Error deleting course:", error);
+    console.error("Error updating course:", error);
     throw error;
   }
 };
 
-  // Add lesson
+
+
+  const deleteCourse = async (courseId) => {
+    dispatch({ type: "SET_LOADING" });
+    try {
+      await deleteCourseById(courseId);
+      dispatch({ type: "DELETE_COURSE", payload: courseId });
+    } catch (error) {
+      console.error("Error deleting course:", error);
+      throw error;
+    }
+  };
+
   const addLesson = async (lessonData) => {
     if (!user) return alert("You must be logged in!");
     dispatch({ type: "SET_LOADING" });
@@ -148,8 +149,8 @@ export function CoursesProvider({ children }) {
   };
 
   useEffect(() => {
-    if (profile) fetchCourses();
-  }, [profile, fetchCourses]);
+    fetchCourses();
+  }, [fetchCourses]);
 
   return (
     <CoursesContext.Provider
